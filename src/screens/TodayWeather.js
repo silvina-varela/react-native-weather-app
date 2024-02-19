@@ -127,6 +127,8 @@ const styles = StyleSheet.create({
   },
   imageLayout: {
     flex: 1,
+    width: "100%",
+    height: "100%"
   },
   mainTemp: {
     fontSize: 48,
