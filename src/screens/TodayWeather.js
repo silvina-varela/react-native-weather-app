@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext, useContext } from "react";
 import {
   TouchableOpacity,
   ImageBackground,
@@ -8,8 +8,9 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { weatherType } from "../utilities/weatherType";
+import SettingsModal from "../components/SettingsModal";
 
-const Weather = ({ weatherData, city }) => {
+const TodayWeather = ({ weatherData, city }) => {
   const [timeOfDay, setTimeOfDay] = useState("");
 
   useEffect(() => {
@@ -50,6 +51,16 @@ const Weather = ({ weatherData, city }) => {
 
   const weatherCondition = weather[0]?.main;
 
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const handleSettingsPress = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalVisible(false);
+  };
+
   const {
     container,
     mainWrapper,
@@ -63,11 +74,8 @@ const Weather = ({ weatherData, city }) => {
     mainTemp,
     secondaryTemp,
     cityWrapper,
+    rowWrapper,
   } = styles;
-
-  const handleSettingsPress = () => {
-    // Handle settings button press
-  };
   return (
     <View style={container}>
       <ImageBackground source={imageURL[timeOfDay]} style={imageLayout}>
@@ -101,6 +109,10 @@ const Weather = ({ weatherData, city }) => {
           </View>
         </View>
       </ImageBackground>
+      <SettingsModal
+        visible={isModalVisible}
+        onClose={handleCloseModal}
+      />
     </View>
   );
 };
@@ -109,7 +121,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   mainWrapper: {
-    flex: 6,
+    flex: 2,
     marginTop: 32,
     alignItems: "center",
   },
@@ -144,6 +156,9 @@ const styles = StyleSheet.create({
   },
   rowWrapper: {
     flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 10,
   },
   columnStyle: {
     flexDirection: "column",
@@ -163,4 +178,4 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 });
-export default Weather;
+export default TodayWeather;

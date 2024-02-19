@@ -1,39 +1,36 @@
-import React from "react";
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  FlatList,
-  StatusBar,
-  ImageBackground,
-} from "react-native";
+import React, { useEffect, useState } from "react";
+import { SafeAreaView, StyleSheet, FlatList } from "react-native";
 import ListItem from "../components/ListItem";
+import { getForecast } from "../utilities/getForecast";
 
-const UpcomingWeather = ({weatherData}) => {
+const UpcomingWeather = ({ weatherData }) => {
   const renderItem = ({ item }) => {
     return (
       <ListItem
-        condition={item.weather[0].main}
+        condition={item.condition}
         dt_txt={item.dt_txt}
-        min={item.main.temp_min}
-        max={item.main.temp_max}
+        min={item.lowestTemp}
+        max={item.highestTemp}
       />
     );
   };
 
-  const { container, image } = styles;
+  const { container } = styles;
+
+  const [forecastData, setForecastData] = useState();
+
+  useEffect(() => {
+    const forecast = getForecast(weatherData);
+    setForecastData(forecast);
+  }, []);
+
   return (
     <SafeAreaView style={container}>
-      <ImageBackground
-        source={require("../../assets/upcoming-bg.jpg")}
-        style={image}
-      >
-        <FlatList
-          data={weatherData}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.dt_txt}
-        />
-      </ImageBackground>
+      <FlatList
+        data={forecastData}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.dt_txt}
+      />
     </SafeAreaView>
   );
 };
@@ -41,11 +38,9 @@ const UpcomingWeather = ({weatherData}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
     backgroundColor: "royalblue",
-  },
-  image: {
-    flex: 1,
+    justifyContent: "center",
+    paddingTop: 40,
   },
 });
 
