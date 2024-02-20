@@ -30,7 +30,6 @@ const useWeather = () => {
           const response = await fetch(
             `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${WEATHER_API_KEY}&units=${unit || "metric"}`
           );
-          console.log({unit})
           const data = await response.json();
           setWeather(data);
         } catch (error) {
