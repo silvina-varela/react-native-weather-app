@@ -1,4 +1,4 @@
-import React, { useEffect, useState, createContext, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TouchableOpacity,
   ImageBackground,
@@ -74,7 +74,6 @@ const TodayWeather = ({ weatherData, city }) => {
     mainTemp,
     secondaryTemp,
     cityWrapper,
-    rowWrapper,
   } = styles;
   return (
     <View style={container}>
@@ -109,10 +108,7 @@ const TodayWeather = ({ weatherData, city }) => {
           </View>
         </View>
       </ImageBackground>
-      <SettingsModal
-        visible={isModalVisible}
-        onClose={handleCloseModal}
-      />
+      <SettingsModal visible={isModalVisible} onClose={handleCloseModal} />
     </View>
   );
 };
@@ -128,7 +124,7 @@ const styles = StyleSheet.create({
   imageLayout: {
     flex: 1,
     width: "100%",
-    height: "100%"
+    height: "100%",
   },
   mainTemp: {
     fontSize: 48,

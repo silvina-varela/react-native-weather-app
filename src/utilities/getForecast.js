@@ -3,7 +3,6 @@ export const getForecast = (data) => {
 
   data.forEach((entry) => {
     const date = entry.dt_txt.split(" ")[0]; // Extracting date from the datetime string
-    console.log(entry);
     if (!dailyTemperatures[date]) {
       dailyTemperatures[date] = {
         highestTemp: -Infinity,
